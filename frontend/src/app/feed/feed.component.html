@@ -1,0 +1,29 @@
+<div class="feed-container">
+  <!-- Caixa de publicação -->
+  <div class="post-box">
+    <textarea placeholder="Em qual livro você está pensando?" [(ngModel)]="newPost"></textarea>
+    <button class="publish-btn" (click)="publishPost()" [disabled]="!newPost.trim()">Publicar</button>
+  </div>
+
+  <!-- Lista de posts -->
+  <div class="post-card" *ngFor="let post of posts">
+    <div class="post-header">
+      <img src="assets/default-user.png" alt="User" class="avatar" />
+      <div>
+        <h3>{{ post.author }}</h3>
+        <p class="time">{{ post.time }}</p>
+      </div>
+    </div>
+
+    <div class="post-content">
+      <p>{{ post.content }}</p>
+    </div>
+
+    <div class="post-footer">
+      <div class="actions">
+        <button><i class="fa-regular fa-heart"></i> {{ post.likes }}</button>
+        <button><i class="fa-regular fa-comment"></i> {{ post.comments }}</button>
+      </div>
+    </div>
+  </div>
+</div>

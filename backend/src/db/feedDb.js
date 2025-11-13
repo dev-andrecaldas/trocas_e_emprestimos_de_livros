@@ -77,7 +77,7 @@ class FeedDb {
         return result.rows.length > 0;
     }
 
-    //Verificar se o usuário já curtiu um post
+    // Verificar se o usuário já curtiu um post
     static async hasLiked(model) {
         const conn = await db.connect();
         const { post_id, user_id } = model;
@@ -87,7 +87,7 @@ class FeedDb {
         return result.rows.length > 0;
     }
 
-    //Adicionar uma curtida
+    // Adicionar uma curtida
     static async insertLike(model) {
         const conn = await db.connect();
         const { post_id, user_id } = model;
@@ -97,7 +97,7 @@ class FeedDb {
         return result.rows[0];
     }
 
-    //Remover uma curtida
+    // Remover uma curtida
     static async deleteLike(model) {
         const conn = await db.connect();
         const { post_id, user_id } = model;
@@ -107,7 +107,7 @@ class FeedDb {
         return result.rowCount > 0;
     }
 
-    //Adicionar um comentário
+    // Adicionar um comentário
     static async insertComment(model) {
         const conn = await db.connect();
         const { post_id, user_id, content } = model;
@@ -117,7 +117,7 @@ class FeedDb {
         return result.rows[0];
     }
 
-    //Obter comentários de um post por ID
+    // Obter comentários de um post por ID
     static async getCommentsByPostId(model) {
         const conn = await db.connect();
         const { post_id } = model;

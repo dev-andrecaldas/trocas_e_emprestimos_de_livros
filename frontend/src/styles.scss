@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  /* O fundo gradiente fica */
+  background: linear-gradient(135deg, #f0f4ff, #ffffff);
+  min-height: 100vh;
+  /* As linhas abaixo foram removidas pois centralizavam o header */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+}

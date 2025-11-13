@@ -1,0 +1,19 @@
+/* Em offer-book-modal.component.scss */
+mat-list-item {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 4px;
+  
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  
+    &.selected {
+      background-color: #e0e8f0; // Um azul claro para indicar seleção
+      font-weight: 600;
+    }
+  }
+  
+  mat-dialog-actions {
+    padding: 16px 24px;
+  }

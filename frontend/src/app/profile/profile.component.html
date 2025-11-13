@@ -1,0 +1,168 @@
+<div class="profile-page-container" *ngIf="user">
+  <div class="profile-card">
+    <img [src]="user.avatar ? '/' + user.avatar : '/default-avatar.png'" alt="Avatar" class="avatar" />
+    <h2>{{ user.full_name || user.username }}</h2>
+    <p class="username">@{{ user.username }}</p>
+    <p class="bio" *ngIf="user.bio">{{ user.bio }}</p>
+    <div class="location" *ngIf="user.city || user.state">
+      <span *ngIf="user.city">{{ user.city }}</span>
+      <span *ngIf="user.city && user.state">, </span>
+      <span *ngIf="user.state">{{ user.state }}</span>
+    </div>
+
+    <button class="edit-btn" (click)="toggleEditMode()">EDITAR PERFIL</button>
+    <button class="add-book-btn" (click)="openBookModal()">ADICIONAR LIVRO</button>
+
+    <div class="books-section">
+      <h3>Meus Livros</h3>
+      <div class="books-list">
+        <!-- O loop 'ngFor' que exibe cada livro -->
+        <div class="book" *ngFor="let book of user.books">
+          <img [src]="book.img" [alt]="book.title" />
+          <p>{{ book.title }} ({{ book.year || 'Ano não definido' }})</p>
+          <p>{{ book.author }}</p>
+          
+          <!-- ===== BOTÃO DE EXCLUIR ADICIONADO AQUI ===== -->
+          <!-- Ele chama a função deleteBook() com o ID do livro específico -->
+          <button class="delete-book-btn" (click)="deleteBook(book.id)">
+            Excluir
+          </button>
+          <!-- ============================================= -->
+
+        </div>
+      </div>
+    </div>
+
+    <div class="preferences-section">
+      <h3>Preferências</h3>
+      <div *ngIf="user.preferences?.length">
+        <span class="tag" *ngFor="let tag of user.preferences">{{ tag }}</span>
+      </div>
+      <p *ngIf="!user.preferences?.length">Nenhuma preferência cadastrada</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de edição de perfil -->
+<div class="edit-modal" *ngIf="editMode">
+  <div class="modal-content">
+    <div class="close-btn" (click)="cancelEdit()">✖</div>
+    <h2>Editar Perfil</h2>
+
+    <div class="avatar-select">
+      <p>Escolha um avatar:</p>
+      <div class="avatar-options">
+        <img *ngFor="let i of [1,2,3,4,5]"
+             [src]="'/avataaars' + i + '.png'"
+             (click)="selectAvatar('avataaars' + i + '.png')"
+             [class.selected]="selectedAvatar === ('avataaars' + i + '.png')" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Nome Completo</label>
+      <input type="text" [(ngModel)]="editableUser.full_name" />
+    </div>
+
+    <div class="form-group">
+      <label>Nome de Usuário</label>
+      <input type="text" [(ngModel)]="editableUser.username" />
+    </div>
+
+    <div class="form-group">
+      <label>Bio</label>
+      <textarea rows="3" [(ngModel)]="editableUser.bio"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Estado</label>
+      <select [(ngModel)]="editableUser.state" (change)="onStateChange(editableUser)">
+        <option *ngFor="let estado of estados" [value]="estado.sigla">{{ estado.nome }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Cidade</label>
+      <select [(ngModel)]="editableUser.city" [disabled]="!editableUser.state">
+        <option *ngFor="let cidade of cidades" [value]="cidade.nome">{{ cidade.nome }}</option>
+      </select>
+    </div>
+
+    <div class="preferences-grid">
+      <div class="preference-item" *ngFor="let genre of allGenres">
+        <input type="checkbox" [id]="'genre-' + genre"
+               [checked]="editableUser.preferences?.includes(genre)"
+               (change)="onPreferenceChange(genre, $event)">
+        <label [for]="'genre-' + genre">{{ genre }}</label>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button class="btn btn-danger" (click)="deleteAccount()">Deletar Conta</button>
+      <div class="save-actions">
+        <button class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+        <button class="btn btn-primary" (click)="saveProfile()">Salvar Alterações</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de adição de livro -->
+<div class="book-form-modal" *ngIf="bookModal">
+  <div class="form-content">
+    <div class="close-btn" (click)="closeBookModal()">✖</div>
+    <h2>Adicionar Livro</h2>
+    <form [formGroup]="bookForm" (ngSubmit)="submitBook()">
+      <div class="form-group">
+        <label>Título</label>
+        <input type="text" formControlName="title">
+      </div>
+
+      <div class="form-group">
+        <label>Autor</label>
+        <input type="text" formControlName="author">
+      </div>
+
+      <div class="form-group">
+        <label>Condição</label>
+        <!-- Esta seção já estava correta com os valores em minúsculo -->
+        <select formControlName="condition">
+          <option value="novo">Novo</option>
+          <option value="usado - bom">Usado - Bom</option>
+          <option value="usado - razoável">Usado - Razoável</option>
+          <option value="usado - ruim">Usado - Ruim</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Gênero</label>
+        <select formControlName="genre">
+          <option *ngFor="let g of allGenres" [value]="g">{{ g }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Ano de publicação</label>
+        <input type="number" formControlName="year">
+      </div>
+
+      <div class="form-group">
+        <label>Imagem</label>
+        <input type="text" formControlName="img" readonly>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <label><input type="checkbox" formControlName="exchange_available"> Disponível para troca</label>
+        <label><input type="checkbox" formControlName="loan_available"> Disponível para empréstimo</label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="loading">Adicionar livro</button>
+        <button type="button" (click)="closeBookModal()">Cancelar</button>
+      </div>
+
+      <p class="success" *ngIf="success">{{ success }}</p>
+      <p class="error" *ngIf="error">{{ error }}</p>
+    </form>
+  </div>
+</div>

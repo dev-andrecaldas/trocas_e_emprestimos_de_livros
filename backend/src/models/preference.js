@@ -21,7 +21,7 @@ class Preference {
         return PreferenceDb.getByUser({ user_id });
     }
 
-    //Deletar uma preferência
+    // Deletar uma preferência
     static async deletePreference(user_id, user_pref_id) {
         return PreferenceDb.deletePreference({ user_id, user_pref_id });
  

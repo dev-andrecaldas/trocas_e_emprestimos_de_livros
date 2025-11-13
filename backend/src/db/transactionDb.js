@@ -97,7 +97,7 @@ class TransactionDb {
         
         const transaction_id = model.transaction_id;
         const status = model.status;
-        const owner_id = model.owner_id;
+        const owner_id = model.owner_id; // Usado para permissão
         
         const query = `
             UPDATE transactions 
@@ -162,11 +162,14 @@ class TransactionDb {
                 b.title as book_title,
                 b.author as book_author,
                 u_req.username as requester_name,
-                u_owner.username as owner_name
+                u_owner.username as owner_name,
+                ob.title as offered_book_title,
+                ob.author as offered_book_author
             FROM transactions t
             JOIN books b ON t.book_id = b.book_id
             JOIN users u_req ON t.requester_id = u_req.user_id
             JOIN users u_owner ON t.owner_id = u_owner.user_id
+            LEFT JOIN books ob ON t.offered_book_id = ob.book_id
             WHERE (t.requester_id = $1 OR t.owner_id = $1) AND t.status = $2
             ORDER BY t.request_date DESC
         `;
@@ -194,6 +197,101 @@ class TransactionDb {
         
         return result.rowCount > 0;
     }
-}
+    
+    // --- MÉTODOS NOVOS ADICIONADOS ---
 
+    // NOVO: Verificar se o usuário tem uma troca ativa
+    static async findActiveTradeByUser(model) {
+        const conn = await db.connect();
+        const user_id = model.user_id;
+
+        const query = `
+            SELECT transaction_id 
+            FROM transactions 
+            WHERE 
+                (requester_id = $1 OR owner_id = $1)
+                AND transaction_type = 'troca'
+                AND status NOT IN ('concluido', 'recusado', 'cancelado')
+            LIMIT 1;
+        `;
+        const result = await conn.query(query, [user_id]);
+        conn.release();
+        return result.rows[0]; // Retorna a transação ativa se existir
+    }
+
+    // NOVO: Atualiza o status de recebimento (requester_confirmed_receipt ou owner_confirmed_receipt)
+    static async confirmReceipt(model) {
+        const conn = await db.connect();
+        const { transaction_id, user_id, user_role, transaction_type } = model;
+
+        let columnToUpdate;
+        if (user_role === 'requester') {
+            columnToUpdate = 'requester_confirmed_receipt';
+        } else if (user_role === 'owner') {
+            columnToUpdate = 'owner_confirmed_receipt';
+        } else {
+            conn.release();
+            throw new Error('Papel de usuário inválido para confirmação.');
+        }
+
+        // Lógica para o prazo de 10 dias do EMPRÉSTIMO
+        let dueDateQuery = '';
+        const queryParams = [transaction_id, user_id];
+        
+        // Se for um empréstimo E for o solicitante confirmando, inicie o relógio de 10 dias
+        if (transaction_type === 'emprestimo' && user_role === 'requester') {
+            dueDateQuery = ', due_date = NOW() + INTERVAL \'10 days\'';
+        }
+
+        const query = `
+            UPDATE transactions
+            SET ${columnToUpdate} = true ${dueDateQuery}
+            WHERE transaction_id = $1 
+              AND (requester_id = $2 OR owner_id = $2)
+              AND status = 'aceito'
+            RETURNING *;
+        `;
+        
+        const result = await conn.query(query, queryParams);
+        conn.release();
+        return result.rows[0];
+    }
+
+    // NOVO: Verifica e completa a transação se ambas as partes confirmaram
+   // Dentro da classe TransactionDb em /db/transactionDb.js
+
+    // NOVO: Verifica e completa a transação se ambas as partes confirmaram
+    // NOVO: Verifica e completa a transação se ambas as partes confirmaram
+    static async checkAndCompleteTransaction(model) {
+        const conn = await db.connect();
+        const { transaction_id } = model; 
+
+        // <<< ADICIONE ESTE LOG >>>
+        console.log(`[checkAndCompleteTransaction DB] Tentando completar TX ${transaction_id}`); 
+
+        const query = `
+            UPDATE transactions
+            SET status = 'concluido', updated_at = NOW()
+            WHERE transaction_id = $1
+              AND requester_confirmed_receipt = true 
+              AND owner_confirmed_receipt = true   
+              AND status = 'aceito'              
+            RETURNING *; 
+        `;
+        
+        try {
+            const result = await conn.query(query, [transaction_id]);
+            conn.release();
+            
+            // <<< ADICIONE ESTE LOG >>>
+            console.log(`[checkAndCompleteTransaction DB] Resultado da query para TX ${transaction_id}:`, result.rows[0]); 
+
+            return result.rows[0]; 
+        } catch (error) {
+            conn.release();
+            console.error(`[checkAndCompleteTransaction DB] Erro ao tentar completar TX ${transaction_id}:`, error); // <<< LOG DE ERRO
+            throw error; 
+        }
+    }
+}
 module.exports = TransactionDb;

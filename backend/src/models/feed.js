@@ -42,7 +42,7 @@ class Feed {
         return FeedDb.deletePost({ user_id, post_id });
     }
 
-    //Curtir ou descurtir um post
+    // Curtir ou descurtir um post
     static async toggleLike(post_id, user_id) {
         const model = { post_id, user_id };
         const alreadyLiked = await FeedDb.hasLiked(model);
@@ -55,7 +55,7 @@ class Feed {
     }
 }
 
-    //Adicionar um comentário
+    // Adicionar um comentário
     static async addComment(post_id, user_id, content) {
         if (!content || content.trim() === '') {
         throw new Error('O conteúdo do comentário não pode ser vazio.');
@@ -64,7 +64,7 @@ class Feed {
         return FeedDb.insertComment(model);
 }
 
-    //Obter comentários de um post
+    // Obter comentários de um post
     static async getComments(post_id) {
         return FeedDb.getCommentsByPostId({ post_id });
     }

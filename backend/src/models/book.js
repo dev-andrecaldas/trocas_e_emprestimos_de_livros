@@ -1,4 +1,4 @@
-const BookDb = require('../db/bookDb');
+const BookDb = require('../db/bookDb'); // Verifique se já está importado
 
 class Book {
     
@@ -53,15 +53,15 @@ class Book {
             errors.push('Condição inválida');
         }
         
-        if (model.isbn && !this.isValidISBN(model.isbn)) {
+        if (model.isbn && model.isbn.trim().length > 0 && !this.isValidISBN(model.isbn)) { // Verifica se não está vazio antes de validar
             errors.push('ISBN inválido');
         }
         
-        if (typeof model.exchange_available !== 'boolean') {
+        if (model.exchange_available !== undefined && typeof model.exchange_available !== 'boolean') {
             errors.push('exchange_available deve ser boolean');
         }
         
-        if (typeof model.loan_available !== 'boolean') {
+        if (model.loan_available !== undefined && typeof model.loan_available !== 'boolean') {
             errors.push('loan_available deve ser boolean');
         }
         
@@ -76,9 +76,7 @@ class Book {
     
     // Validar ISBN (formato básico)
     static isValidISBN(isbn) {
-        // Remove hífens e espaços
         const cleanISBN = isbn.replace(/[-\s]/g, '');
-        // Verifica se tem 10 ou 13 dígitos (ISBN-10 ou ISBN-13)
         return /^(\d{9}X|\d{10}|\d{13})$/.test(cleanISBN);
     }
     
@@ -87,16 +85,27 @@ class Book {
         return {
             title: data.title?.trim(),
             author: data.author?.trim(),
-            publisher: data.publisher?.trim(),
+            publication_year: data.year || null, 
+            main_genre: data.genre?.trim() || null,
+            cover_image_url: data.img?.trim() || 'em desenvolvimento', // Pode querer um placeholder melhor
+            publisher: data.publisher?.trim() || null,
             isbn: data.isbn?.trim() || null,
             description: data.description?.trim() || null,
             condition: data.condition,
             exchange_available: Boolean(data.exchange_available),
             loan_available: Boolean(data.loan_available),
-            available: data.available !== undefined ? Boolean(data.available) : true,
+            available: data.available !== undefined ? Boolean(data.available) : true, // Default true
             owner_id: owner_id
         };
     }
+
+    // --- MÉTODO NOVO ADICIONADO ---
+    // NOVO: Atalho para chamar a atualização de disponibilidade no DB
+    static updateAvailability(model) {
+        // Simplesmente repassa a chamada para o BookDb
+        return BookDb.updateAvailability(model);
+    }
+    // --- FIM DO MÉTODO NOVO ---
 }
 
 module.exports = Book;

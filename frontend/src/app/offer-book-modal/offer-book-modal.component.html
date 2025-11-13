@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Oferecer Livro para Troca</h2>
+
+<mat-dialog-content class="mat-typography">
+  <p>Selecione qual dos seus livros você deseja oferecer em troca:</p>
+  
+  <mat-list role="list" *ngIf="data.myBooks && data.myBooks.length > 0">
+    <mat-list-item 
+      role="listitem" 
+      *ngFor="let book of data.myBooks" 
+      (click)="selectBook(book.id)" 
+      [class.selected]="selectedBookId === book.id">
+      {{ book.title }} - {{ book.author }}
+    </mat-list-item>
+  </mat-list>
+  
+  <p *ngIf="!data.myBooks || data.myBooks.length === 0">
+    Você não possui livros disponíveis para oferecer.
+  </p>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="selectedBookId" [disabled]="!selectedBookId">
+    Confirmar Oferta
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,86 @@
+<div class="notifications-container">
+    <h1>Minhas Solicitações</h1>
+  
+    <div class="tabs">
+      <button (click)="loadTransactions('pendente')" [class.active]="currentFilter === 'pendente'">Pendentes</button>
+      <button (click)="loadTransactions('aceito')" [class.active]="currentFilter === 'aceito'">Ativas</button>
+      <button (click)="loadTransactions('concluido')" [class.active]="currentFilter === 'concluido'">Concluídas</button>
+      <button (click)="loadTransactions('recusado')" [class.active]="currentFilter === 'recusado'">Outras</button>
+    </div>
+  
+    <div *ngIf="loading" class="status-msg">Carregando...</div>
+    <div *ngIf="!loading && transactions.length === 0" class="status-msg">
+      Nenhuma solicitação {{ currentFilter }}.
+    </div>
+  
+    <div class="notification-list">
+      <div *ngFor="let tx of transactions" class="notification-card">
+        
+        <div class="card-content">
+          <div class="message">
+            
+            <p *ngIf="tx.owner_id === currentUserId">
+              <strong>{{ tx.requester_name }}</strong> solicitou 
+              <strong>{{ tx.transaction_type }}</strong> do seu livro: 
+              <strong>{{ tx.book_title }}</strong>.
+              <span *ngIf="tx.transaction_type === 'troca'">
+                Ele oferece o livro: <strong>{{ tx.offered_book_title || 'Livro não especificado' }}</strong>.
+              </span>
+            </p>
+  
+            <p *ngIf="tx.requester_id === currentUserId">
+              Você solicitou <strong>{{ tx.transaction_type }}</strong> 
+              para <strong>{{ tx.owner_name }}</strong> 
+              do livro: <strong>{{ tx.book_title }}</strong>.
+            </p>
+          </div>
+        </div>
+  
+        <div *ngIf="tx.status === 'pendente'" class="card-actions">
+          <ng-container *ngIf="tx.owner_id === currentUserId">
+            <button (click)="accept(tx.transaction_id)" class="btn-accept">ACEITAR</button>
+            <button (click)="reject(tx.transaction_id)" class="btn-reject">RECUSAR</button>
+          </ng-container>
+          <ng-container *ngIf="tx.requester_id === currentUserId">
+            <p class="status-info">Aguardando resposta do dono.</p>
+          </ng-container>
+        </div>
+  
+        <div *ngIf="tx.status === 'aceito'" class="card-actions">
+          
+          <ng-container *ngIf="tx.transaction_type === 'emprestimo'">
+            <button *ngIf="tx.requester_id === currentUserId && !tx.requester_confirmed_receipt" 
+                    (click)="confirmReceipt(tx.transaction_id)" class="btn-confirm">
+              Confirmar que recebi o livro
+            </button>
+            <span *ngIf="tx.requester_id === currentUserId && tx.requester_confirmed_receipt">
+              Empréstimo ativo. Devolver até: {{ tx.due_date | date: 'dd/MM/yyyy' }}
+            </span>
+            <button *ngIf="tx.owner_id === currentUserId && tx.requester_confirmed_receipt && !tx.owner_confirmed_receipt"
+                    (click)="confirmReceipt(tx.transaction_id)" class="btn-confirm">
+              Confirmar devolução do livro
+            </button>
+          </ng-container>
+  
+          <ng-container *ngIf="tx.transaction_type === 'troca'">
+            <button *ngIf="tx.requester_id === currentUserId && !tx.requester_confirmed_receipt"
+                    (click)="confirmReceipt(tx.transaction_id)" class="btn-confirm">
+              Confirmar que recebi o livro de {{ tx.owner_name }}
+            </button>
+            <span *ngIf="tx.requester_id === currentUserId && tx.requester_confirmed_receipt" class="status-info">
+              Você confirmou! Aguardando {{ tx.owner_name }}.
+            </span>
+            
+            <button *ngIf="tx.owner_id === currentUserId && !tx.owner_confirmed_receipt"
+                    (click)="confirmReceipt(tx.transaction_id)" class="btn-confirm">
+              Confirmar que recebi o livro de {{ tx.requester_name }}
+            </button>
+            <span *ngIf="tx.owner_id === currentUserId && tx.owner_confirmed_receipt" class="status-info">
+              Você confirmou! Aguardando {{ tx.requester_name }}.
+            </span>
+          </ng-container>
+        </div>
+  
+      </div>
+    </div>
+  </div>

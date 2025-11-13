@@ -96,7 +96,7 @@ exports.deletePost = async (req, res) => {
     }
 };
 
-//Curtir ou descurtir um post
+// Curtir ou descurtir um post
 exports.toggleLike = async (req, res) => {
     try {
         const user_id = req.user.user_id;
@@ -112,7 +112,7 @@ exports.toggleLike = async (req, res) => {
     }
 };
 
-//Adicionar um comentário
+// Adicionar um comentário
 exports.addComment = async (req, res) => {
     try {
         const user_id = req.user.user_id;
@@ -129,7 +129,7 @@ exports.addComment = async (req, res) => {
     }
 };
 
-//Listar comentários de um post
+// Listar comentários de um post
 exports.getComments = async (req, res) => {
     try {
         const post_id = parseInt(req.params.id);

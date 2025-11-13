@@ -44,7 +44,7 @@ exports.getConversation = async (req, res) => {
     }
 };
 
-//Deletar uma mensagem
+// Deletar uma mensagem
 exports.deleteMessage = async (req, res) => {
     try {
         const user_id = req.user.user_id;

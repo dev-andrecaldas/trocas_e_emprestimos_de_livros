@@ -75,7 +75,7 @@ class MessageDb {
         return result.rowCount > 0;
     }
 
-    //Obter mensagem por ID
+    // Obter mensagem por ID
     static async getById(model) {
         const conn = await db.connect();
         const { message_id } = model;

@@ -1,0 +1,67 @@
+<div class="book-list-container">
+
+    <div class="filters">
+      <div class="header-search">
+        <div class="search-container">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+          </svg>
+          <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" placeholder="Buscar livros..." />
+        </div>
+      </div>
+  
+      <select [(ngModel)]="selectedType" (change)="onTypeChange()" class="type-filter">
+        <option value="">Todos os tipos</option>
+        <option value="troca">Troca</option>
+        <option value="emprestimo">Empréstimo</option>
+      </select>
+  
+      <select [(ngModel)]="selectedGenre" (change)="onGenreChange()" class="genre-filter">
+        <option value="">Todos os gêneros</option>
+        <option value="ficção">Ficção</option>
+        <option value="romance">Romance</option>
+        <option value="aventura">Aventura</option>
+        <option value="fantasia">Fantasia</option>
+        <option value="terror">Terror</option>
+        <option value="biografia">Biografia</option>
+        <option value="educativo">Educativo</option>
+        <option value="drama">Drama</option>
+        <option value="suspense">Suspense</option>
+        <option value="poesia">Poesia</option>
+      </select>
+    </div>
+  
+    <div *ngIf="loading" class="status-msg">Carregando livros...</div>
+    <div *ngIf="error" class="status-msg error">{{ error }}</div>
+    <div *ngIf="!loading && books.length === 0" class="status-msg">Nenhum livro encontrado.</div>
+  
+    <div class="books-grid" *ngIf="!loading && filteredBooks.length > 0">
+        <div class="book-card" *ngFor="let book of filteredBooks">
+    
+          <div class="book-image">
+            <span class="placeholder-text">Imagem ainda em desenvolvimento</span>
+          </div>
+  
+        <div class="book-info">
+          <h3>{{ book.title }}</h3>
+          <p class="author">{{ book.author }}</p>
+          <p class="genre" *ngIf="book.genre">Gênero: <strong>{{ book.genre }}</strong></p>
+          <p class="condition">Condição: <strong>{{ book.condition }}</strong></p>
+          <p class="availability">
+            <span *ngIf="book.exchange_available" class="badge troca">Disponível para troca</span>
+            <span *ngIf="book.loan_available" class="badge emprestimo">Disponível para empréstimo</span>
+          </p>
+          <p class="owner">📘 Dono: {{ book.owner_name || 'Desconhecido' }}</p>
+  
+          <div class="book-actions" *ngIf="book.ownerId !== userId">
+            <button *ngIf="book.loan_available" (click)="requestLoan(book)" class="btn-loan">
+              Solicitar Empréstimo
+            </button>
+            <button *ngIf="book.exchange_available" (click)="requestExchange(book)" class="btn-exchange">
+              Solicitar Troca
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

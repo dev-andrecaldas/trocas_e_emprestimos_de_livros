@@ -37,7 +37,7 @@ exports.getPreferences = async (req, res) => {
     }
 };
 
-//Deletar uma preferência
+// Deletar uma preferência
 exports.deletePreference = async (req, res) => {
     try {
         const user_id = req.user.user_id;

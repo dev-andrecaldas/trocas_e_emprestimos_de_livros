@@ -43,7 +43,7 @@ class PreferenceDb {
         return result.rows;
     }
 
-    //Deletar preferência
+    // Deletar preferência
     static async deletePreference(model) {
         const conn = await db.connect();
         const { user_id, user_pref_id } = model;

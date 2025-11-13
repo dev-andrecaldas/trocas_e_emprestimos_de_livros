@@ -1,0 +1,65 @@
+<div class="login-container">
+  <div class="login-card">
+    
+    <!-- Formulário de Login -->
+    <div *ngIf="!isRegisterMode">
+      <h2>Entrar no Nexus</h2>
+      <p>Bem-vindo de volta!</p>
+      <form (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <!-- CORREÇÃO NA LINHA 11: Garantindo que a tag está fechada corretamente -->
+          <input 
+            type="email" 
+            id="login-email" 
+            [(ngModel)]="loginData.email" 
+            name="loginEmail" 
+            required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Senha</label>
+          <!-- CORREÇÃO NA LINHA 20: Garantindo que a tag está fechada corretamente -->
+          <input 
+            type="password" 
+            id="login-password" 
+            [(ngModel)]="loginData.password" 
+            name="loginPassword" 
+            required>
+        </div>
+        <button type="submit" class="btn-primary">Entrar</button>
+      </form>
+      <div class="toggle-text">
+        Não tem uma conta? <a href="#" (click)="toggleMode()">Registre-se</a>
+      </div>
+    </div>
+
+    <!-- Formulário de Registro -->
+    <div *ngIf="isRegisterMode">
+      <h2>Criar Conta</h2>
+      <p>Comece a trocar livros hoje mesmo.</p>
+      <form (ngSubmit)="onRegister()">
+        <div class="form-group">
+          <label for="register-name">Nome Completo</label>
+          <input type="text" id="register-name" [(ngModel)]="registerData.full_name" name="registerFullName" required>
+        </div>
+        <div class="form-group">
+          <label for="register-username">Nome de Usuário</label>
+          <input type="text" id="register-username" [(ngModel)]="registerData.username" name="registerUsername" required>
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email</label>
+          <input type="email" id="register-email" [(ngModel)]="registerData.email" name="registerEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="register-password">Senha</label>
+          <input type="password" id="register-password" [(ngModel)]="registerData.password" name="registerPassword" required>
+        </div>
+        <button type="submit" class="btn-primary">Criar Conta</button>
+      </form>
+      <div class="toggle-text">
+        Já tem uma conta? <a href="#" (click)="toggleMode()">Faça o login</a>
+      </div>
+    </div>
+
+  </div>
+</div>

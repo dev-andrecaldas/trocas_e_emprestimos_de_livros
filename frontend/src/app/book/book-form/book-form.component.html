@@ -1,0 +1,112 @@
+<div class="book-form-modal">
+    <div class="form-content">
+      <h2>Adicionar Livro</h2>
+      <form [formGroup]="bookForm" (ngSubmit)="submit()">
+  
+        <!-- Título -->
+        <div class="form-group">
+          <label for="title">Título*</label>
+          <input id="title" type="text" formControlName="title">
+          <!-- Mensagem de erro -->
+          <div *ngIf="bookForm.controls['title'].invalid && (bookForm.controls['title'].dirty || bookForm.controls['title'].touched)" class="validation-error">
+            <span *ngIf="bookForm.controls['title'].errors?.['required']">Título é obrigatório.</span>
+            <span *ngIf="bookForm.controls['title'].errors?.['maxlength']">Título muito longo.</span>
+          </div>
+        </div>
+  
+        <!-- Autor -->
+        <div class="form-group">
+          <label for="author">Autor*</label>
+          <input id="author" type="text" formControlName="author">
+          <div *ngIf="bookForm.controls['author'].invalid && (bookForm.controls['author'].dirty || bookForm.controls['author'].touched)" class="validation-error">
+            <span *ngIf="bookForm.controls['author'].errors?.['required']">Autor é obrigatório.</span>
+            <span *ngIf="bookForm.controls['author'].errors?.['maxlength']">Nome do autor muito longo.</span>
+          </div>
+        </div>
+  
+        <!-- Ano -->
+        <div class="form-group">
+          <label for="publication_year">Ano de Publicação</label>
+          <input id="publication_year" type="number" formControlName="publication_year">
+           <div *ngIf="bookForm.controls['publication_year'].invalid && (bookForm.controls['publication_year'].dirty || bookForm.controls['publication_year'].touched)" class="validation-error">
+            <span *ngIf="bookForm.controls['publication_year'].errors?.['min'] || bookForm.controls['publication_year'].errors?.['max']">Ano inválido.</span>
+          </div>
+        </div>
+  
+        <!-- Condição (Dropdown) -->
+        <div class="form-group">
+          <label for="condition">Condição*</label>
+          <!-- <<< MUDANÇA: Usando a lista 'conditions' do .ts >>> -->
+          <select id="condition" formControlName="condition">
+            <option *ngFor="let c of conditions" [value]="c">{{ c | titlecase }}</option> 
+          </select>
+           <div *ngIf="bookForm.controls['condition'].invalid && (bookForm.controls['condition'].dirty || bookForm.controls['condition'].touched)" class="validation-error">
+              <span *ngIf="bookForm.controls['condition'].errors?.['required']">Condição é obrigatória.</span>
+          </div>
+        </div>
+  
+        <!-- Gênero (Dropdown - Seleção Única) -->
+        <div class="form-group">
+          <label for="main_genre">Gênero*</label>
+          <!-- <<< MUDANÇA: Trocou checkboxes por <select> >>> -->
+          <select id="main_genre" formControlName="main_genre">
+            <option value="" disabled>Selecione um gênero</option> 
+            <option *ngFor="let g of genres" [value]="g">{{ g }}</option>
+          </select>
+          <div *ngIf="bookForm.controls['main_genre'].invalid && (bookForm.controls['main_genre'].dirty || bookForm.controls['main_genre'].touched)" class="validation-error">
+              <span *ngIf="bookForm.controls['main_genre'].errors?.['required']">Gênero é obrigatório.</span>
+          </div>
+        </div>
+        
+        <!-- Campos Opcionais Extras (Publisher, ISBN, Description) -->
+         <div class="form-group">
+          <label for="publisher">Editora</label>
+          <input id="publisher" type="text" formControlName="publisher">
+        </div>
+         <div class="form-group">
+          <label for="isbn">ISBN</label>
+          <input id="isbn" type="text" formControlName="isbn">
+          <!-- Adicionar validação de pattern se necessário -->
+        </div>
+         <div class="form-group">
+          <label for="description">Descrição</label>
+          <textarea id="description" formControlName="description" rows="3"></textarea>
+        </div>
+  
+  
+        <!-- Imagem (Placeholder) -->
+        <div class="form-group">
+          <label>Imagem</label>
+          <div class="image-placeholder">Em desenvolvimento</div>
+          <!-- <input type="file" (change)="onFileSelected($event)" /> -->
+        </div>
+  
+        <!-- Disponibilidade (Checkboxes) -->
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" formControlName="exchange_available"> Disponível para troca
+          </label>
+          <label>
+            <input type="checkbox" formControlName="loan_available"> Disponível para empréstimo
+          </label>
+        </div>
+  
+        <!-- Ações -->
+        <div class="form-actions">
+          <button type="submit" [disabled]="loading || bookForm.invalid">
+              {{ loading ? 'Adicionando...' : 'Adicionar livro' }}
+          </button>
+          <button type="button" (click)="cancel()" [disabled]="loading">Cancelar</button>
+        </div>
+  
+        <!-- Mensagens de Sucesso/Erro -->
+        <p class="success" *ngIf="success">{{ success }}</p>
+        <div class="error" *ngIf="error">
+          <p>{{ error }}</p>
+          <ul *ngIf="errorDetails.length > 0">
+              <li *ngFor="let detail of errorDetails">{{ detail }}</li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </div>

@@ -1,0 +1,167 @@
+/* Em src/app/notifications/notifications.component.scss */
+
+// Variáveis de Cor (Ajuste para as cores do seu app)
+$primary-color: #1976d2; // Um azul padrão (para o botão 'Aceitar')
+$border-color: #e0e0e0;  // Cinza claro para bordas
+$text-color: #333;
+$text-light: #777;
+
+.notifications-container {
+  max-width: 800px;
+  margin: 24px auto;
+  padding: 16px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: $text-color;
+  margin-bottom: 24px;
+}
+
+// Estilo para as Abas (Pendentes, Ativas, etc.)
+.tabs {
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid $border-color;
+  margin-bottom: 24px;
+
+  button {
+    padding: 12px 16px;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: $text-light;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease-in-out;
+
+    &.active {
+      color: $primary-color;
+      border-bottom-color: $primary-color;
+    }
+    
+    &:hover:not(.active) {
+      background-color: #f5f5f5;
+    }
+  }
+}
+
+// Mensagens de Status (Carregando, Vazio)
+.status-msg {
+  text-align: center;
+  padding: 40px;
+  color: $text-light;
+  font-size: 1.1rem;
+}
+
+// Lista de Cards
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// O Card de Notificação (Baseado na sua imagem)
+.notification-card {
+  background-color: #ffffff;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+
+// Conteúdo (Avatar + Texto)
+.card-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #ccc; // Cor de fundo para o avatar
+  // Se você tiver um ícone de "não lido" como na imagem
+  position: relative; 
+
+  &::after {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    border-radius: 50%;
+    border: 2px solid white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.message {
+  flex: 1; // Ocupa o espaço restante
+  line-height: 1.5;
+
+  p {
+    margin: 0;
+    color: $text-color;
+    font-size: 1rem;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
+  .time {
+    font-size: 0.85rem;
+    color: $text-light;
+  }
+}
+
+// Ações (Botões)
+.card-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid $border-color;
+}
+
+// Estilo base dos botões
+.btn-accept,
+.btn-reject,
+.btn-confirm {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+// Botão Primário (ACEITAR)
+.btn-accept,
+.btn-confirm {
+  background-color: $primary-color;
+  color: white;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+// Botão Secundário (RECUSAR)
+.btn-reject {
+  background-color: white;
+  color: $text-color;
+  border-color: #ccc;
+
+  &:hover {
+    background-color: #f9f9f9;
+    border-color: #bbb;
+  }
+}

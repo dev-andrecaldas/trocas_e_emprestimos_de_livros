@@ -41,6 +41,25 @@ class Transaction {
     static delete(model) {
         return TransactionDb.delete(model);
     }
+
+    // --- MÉTODOS NOVOS ADICIONADOS ---
+
+    // NOVO: Verificar se o usuário tem uma troca ativa (para a "Trava")
+    static findActiveTradeByUser(model) {
+        return TransactionDb.findActiveTradeByUser(model);
+    }
+    
+    // NOVO: Confirmar o recebimento de um livro
+    static confirmReceipt(model) {
+        return TransactionDb.confirmReceipt(model);
+    }
+    
+    // NOVO: Checar se a transação está completa (ambos confirmaram)
+    static checkAndCompleteTransaction(model) {
+        return TransactionDb.checkAndCompleteTransaction(model);
+    }
+
+    // --- FIM DOS MÉTODOS NOVOS ---
     
     // Validar dados da transação
     static validateTransactionData(model) {
@@ -54,9 +73,10 @@ class Transaction {
             errors.push('Tipo de transação inválido');
         }
         
-        if (model.transaction_type === 'troca' && (!model.offered_book_id || isNaN(model.offered_book_id))) {
-            errors.push('Para trocas, é necessário informar o livro oferecido');
-        }
+        // Esta validação agora é feita no Controller, pois a "trava" é mais importante
+        // if (model.transaction_type === 'troca' && (!model.offered_book_id || isNaN(model.offered_book_id))) {
+        //     errors.push('Para trocas, é necessário informar o livro oferecido');
+        // }
         
         if (model.request_message && model.request_message.length > 500) {
             errors.push('Mensagem de solicitação muito longa (máximo 500 caracteres)');
@@ -107,8 +127,9 @@ class Transaction {
                 'requester': ['cancelado']
             },
             'aceito': {
-                'owner': ['concluido'],
-                'requester': ['concluido']
+                // Modificado para suportar confirmação
+                'owner': ['confirmar_recebimento'],
+                'requester': ['confirmar_recebimento']
             }
         };
         
