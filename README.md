@@ -21,11 +21,11 @@ Como a aplicação utiliza um ecossistema completo (Front-end, Back-end e Banco 
 
 ##  Funcionalidades Implementadas
 
-* ** Autenticação:** Sistema completo de Login e Cadastro com validações.
-* ** Feed Social:** Espaço interativo para postagens e atualizações da comunidade literária.
-* ** Gestão de Biblioteca:** Catálogo para cadastrar, visualizar e organizar livros (CRUD).
-* ** Perfil do Usuário:** Área personalizada para edição de dados e controle do acervo pessoal.
-* ** Interface de Comunicação:** Estrutura de layout pronta para chat e notificações centralizadas.
+* **Autenticação:** Sistema completo de Login e Cadastro com validações.
+* **Feed Social:** Espaço interativo para postagens e atualizações da comunidade literária.
+* **Gestão de Biblioteca:** Catálogo para cadastrar, visualizar e organizar livros (CRUD).
+* **Perfil do Usuário:** Área personalizada para edição de dados e controle do acervo pessoal.
+* **Interface de Comunicação:** Estrutura de layout pronta para chat e notificações centralizadas.
 
 ##  Stack Técnica
 
@@ -38,7 +38,7 @@ Como a aplicação utiliza um ecossistema completo (Front-end, Back-end e Banco 
 
 ---
 
-##  Roadmap de Evolução (Work in Progress)
+##  Roadmap de Evolução (O que falta)
 
 O **Nexus** está em constante refinamento. Atualmente, os seguintes pontos estão sendo trabalhados:
 
