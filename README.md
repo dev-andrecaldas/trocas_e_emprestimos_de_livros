@@ -1,43 +1,58 @@
-Nexus - Conectando Leitores
-O Nexus é uma plataforma Full Stack projetada para ser o ponto de encontro de entusiastas da leitura. A aplicação combina a gestão de acervos literários com uma rede social dinâmica, permitindo que usuários gerenciem suas coleções, interajam através de um feed e realizem trocas ou empréstimos de forma organizada.
+# 📚 Nexus | Conectando Leitores
 
-Demonstração em Vídeo
+<p align="center">
+  <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+</p>
+
+O **Nexus** é uma plataforma **Full Stack** projetada para ser o ponto de encontro de entusiastas da leitura. A aplicação combina a gestão de acervos literários com uma rede social dinâmica, permitindo que usuários gerenciem suas coleções, interajam através de um feed e realizem trocas ou empréstimos de forma organizada.
+
+---
+
+## 📺 Demonstração em Vídeo
+
 Como a aplicação utiliza um ecossistema completo (Front-end, Back-end e Banco de Dados), preparei um vídeo demonstrando as funcionalidades, a interface e o fluxo de navegação atual:
 
-ASSISTIR DEMONSTRAÇÃO DO NEXUS NO YOUTUBE: https://youtu.be/lUdDy4OHeGI?si=90gjztmWhjYHIe7i
+> 🎥 **[ASSISTIR DEMONSTRAÇÃO DO NEXUS NO YOUTUBE](https://youtu.be/lUdDy4OHeGI?si=90gjztmWhjYHIe7i)**
 
-Tecnologias Utilizadas
-Front-end: Angular 18+ (Standalone Components, RxJS, Angular Material).
+---
 
-Back-end: Node.js com Express.
+## 🚀 Funcionalidades Implementadas
 
-Banco de Dados: PostgreSQL.
+* **🔐 Autenticação:** Sistema completo de Login e Cadastro com validações.
+* **📱 Feed Social:** Espaço interativo para postagens e atualizações da comunidade literária.
+* **📖 Gestão de Biblioteca:** Catálogo para cadastrar, visualizar e organizar livros (CRUD).
+* **👤 Perfil do Usuário:** Área personalizada para edição de dados e controle do acervo pessoal.
+* **💬 Interface de Comunicação:** Estrutura de layout pronta para chat e notificações centralizadas.
 
-Estilização: SCSS moderno com foco em UX/UI.
+## 🛠️ Stack Técnica
 
-O que o Nexus já oferece:
-Autenticação: Sistema completo de Login e Cadastro de novos membros.
+| Camada | Tecnologia |
+| :--- | :--- |
+| **Front-end** | Angular 18+, SCSS, Angular Material |
+| **Back-end** | Node.js, Express |
+| **Banco de Dados** | PostgreSQL |
+| **Linguagem** | TypeScript |
 
-Feed Social: Espaço interativo para postagens e atualizações da comunidade.
+---
 
-Gestão de Biblioteca: Catálogo para cadastrar, visualizar e organizar livros.
+## 📈 Roadmap de Evolução (Work in Progress)
 
-Perfil do Usuário: Área personalizada para edição de dados e controle do acervo pessoal.
+O **Nexus** está em constante refinamento. Atualmente, os seguintes pontos estão sendo trabalhados:
 
-Interface de Comunicação: Estrutura de layout pronta para chat e notificações.
+- [ ] **Integração de Dados:** Transição do feed mockado para consumo dinâmico da API.
+- [ ] **Busca Global:** Ajuste no Header para busca de usuários e livros em tempo real.
+- [ ] **Upload de Mídia:** Implementação de suporte para imagens reais de capas e perfis.
+- [ ] **Chat Funcional:** Ativação da lógica de mensagens e correção no fluxo de transações.
+- [ ] **Filtros Avançados:** Refinamento da lógica de filtragem por gêneros literários.
 
-Roadmap de Evolução (O que está sendo aprimorado)
-O Nexus está em constante evolução. Atualmente, os seguintes pontos estão em fase de desenvolvimento técnico:
+---
 
-Dados Reais: Transição do feed (atualmente com dados mockados) para integração total com o banco de dados e consumo da API.
+## 💡 Sobre o Projeto
 
-Busca Inteligente: Ajuste no Header para permitir a busca dinâmica de usuários, além de livros.
+O desenvolvimento do **Nexus** demonstra minha habilidade em construir aplicações ponta a ponta (**End-to-End**). O foco principal foi a criação de uma interface rica e intuitiva utilizando componentes reutilizáveis e serviços desacoplados no Angular, integrados a uma API robusta em Node.js.
 
-Gestão de Mídia: Implementação de upload de imagens reais para capas e perfis.
-
-Refinamento de Lógica: Ajuste nos filtros de gêneros e correção no fluxo de transações de livros.
-
-Ativação do Chat: Implementação da lógica funcional para a troca de mensagens em tempo real.
-
-Sobre o Projeto
-O desenvolvimento do Nexus demonstra minha habilidade em construir aplicações ponta a ponta, desde a modelagem do banco de dados até a criação de interfaces ricas e componentes reutilizáveis no Angular.
+---
+<p align="center"> Desenvolvido por seu_nome_aqui </p>
