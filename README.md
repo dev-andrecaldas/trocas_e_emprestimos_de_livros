@@ -1,4 +1,4 @@
-# 📚 Nexus | Conectando Leitores
+#  Nexus | Conectando Leitores
 
 <p align="center">
   <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
@@ -11,23 +11,23 @@ O **Nexus** é uma plataforma **Full Stack** projetada para ser o ponto de encon
 
 ---
 
-## 📺 Demonstração em Vídeo
+##  Demonstração em Vídeo
 
 Como a aplicação utiliza um ecossistema completo (Front-end, Back-end e Banco de Dados), preparei um vídeo demonstrando as funcionalidades, a interface e o fluxo de navegação atual:
 
-> 🎥 **[ASSISTIR DEMONSTRAÇÃO DO NEXUS NO YOUTUBE](https://youtu.be/lUdDy4OHeGI?si=90gjztmWhjYHIe7i)**
+>  **[ASSISTIR DEMONSTRAÇÃO DO NEXUS NO YOUTUBE](https://youtu.be/lUdDy4OHeGI?si=90gjztmWhjYHIe7i)**
 
 ---
 
-## 🚀 Funcionalidades Implementadas
+##  Funcionalidades Implementadas
 
-* **🔐 Autenticação:** Sistema completo de Login e Cadastro com validações.
-* **📱 Feed Social:** Espaço interativo para postagens e atualizações da comunidade literária.
-* **📖 Gestão de Biblioteca:** Catálogo para cadastrar, visualizar e organizar livros (CRUD).
-* **👤 Perfil do Usuário:** Área personalizada para edição de dados e controle do acervo pessoal.
-* **💬 Interface de Comunicação:** Estrutura de layout pronta para chat e notificações centralizadas.
+* ** Autenticação:** Sistema completo de Login e Cadastro com validações.
+* ** Feed Social:** Espaço interativo para postagens e atualizações da comunidade literária.
+* ** Gestão de Biblioteca:** Catálogo para cadastrar, visualizar e organizar livros (CRUD).
+* ** Perfil do Usuário:** Área personalizada para edição de dados e controle do acervo pessoal.
+* ** Interface de Comunicação:** Estrutura de layout pronta para chat e notificações centralizadas.
 
-## 🛠️ Stack Técnica
+##  Stack Técnica
 
 | Camada | Tecnologia |
 | :--- | :--- |
@@ -38,7 +38,7 @@ Como a aplicação utiliza um ecossistema completo (Front-end, Back-end e Banco 
 
 ---
 
-## 📈 Roadmap de Evolução (Work in Progress)
+##  Roadmap de Evolução (Work in Progress)
 
 O **Nexus** está em constante refinamento. Atualmente, os seguintes pontos estão sendo trabalhados:
 
@@ -50,7 +50,7 @@ O **Nexus** está em constante refinamento. Atualmente, os seguintes pontos est�
 
 ---
 
-## 💡 Sobre o Projeto
+##  Sobre o Projeto
 
 O desenvolvimento do **Nexus** demonstra minha habilidade em construir aplicações ponta a ponta (**End-to-End**). O foco principal foi a criação de uma interface rica e intuitiva utilizando componentes reutilizáveis e serviços desacoplados no Angular, integrados a uma API robusta em Node.js.
 
