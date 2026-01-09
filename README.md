@@ -55,4 +55,4 @@ O **Nexus** está em constante refinamento. Atualmente, os seguintes pontos est�
 O desenvolvimento do **Nexus** demonstra minha habilidade em construir aplicações ponta a ponta (**End-to-End**). O foco principal foi a criação de uma interface rica e intuitiva utilizando componentes reutilizáveis e serviços desacoplados no Angular, integrados a uma API robusta em Node.js.
 
 ---
-<p align="center"> Desenvolvido André Caldas </p>
+<p align="center"> Desenvolvido Por André Caldas </p>
